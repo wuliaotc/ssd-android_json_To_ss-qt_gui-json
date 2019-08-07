@@ -2,18 +2,16 @@ import json
 
 
 def convert(file: str):
-    """
-        "method": "aes-256-cfb",
-        "password": "sKT3e0",
-        "remarks": "ssrcloud%20-%20%E4%B8%AD%E6%B8%AF%E4%B8%93%E7%BA%BF%20IPLC%20D1%201000Mbps%202%E5%80%8D",
-        "server": "sg21.bilibilivpn.com",
-        "server_port": 2079
-    """
+
     configs = []
-    w = open('gui-config1.json', 'w+')
+    w = open('gui-config.json', 'w+')
     with open(file) as f:
         data = json.load(f)
         for item in data:
+            if '游' in item['remarks'] or '回国' in item['remarks'] or '韩' in item['remarks']:#排除游戏线路
+                continue
+            if '港专' not in item['remarks'] and '日专' not in item['remarks'] and '湾' not in item['remarks']:
+                continue
             configs.append({
                 "method": item["method"],
                 "password": item["password"],
